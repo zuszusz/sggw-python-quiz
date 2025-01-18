@@ -12,5 +12,4 @@ class window:
             self.etykieta1=Label(text="Test z informatyki")
             self.etykieta1.grid(row=0,column=0, sticky=W) 
             self.odp1=Button(width=10, text="Odpowiedź 1")
-
             
