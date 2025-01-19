@@ -11,6 +11,7 @@ a4= Answer("Stest","stoks3")
 
 q1= Question("Qtest",[a1,a2,a3,a4],[a1,a2])
 
+#tutaj musi być własna ścieżka do pliku aby działało
 list = readQuestions("C:/Users/quera/OneDrive/Pulpit/studia/semestr5/Python/Projekt/sggw-python-quiz/questions/question.txt")
 print(list[0].text)
 print(q1.text)
