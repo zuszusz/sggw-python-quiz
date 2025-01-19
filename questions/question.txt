@@ -1,7 +1,14 @@
-[?] Kto napisał Pythona?
+[?] Kto napisal Pythona?
 [T][] Holender
 [F][] Francuz
 [F][] Niemiec
 
+[?]Zlota rybka jest?
+[T][] nemo
+[F][] alfred
+[F][] jojo
 
-
+[?] Czy Python jest fajny?
+[T][] tak
+[F][] nie
+[F][] nie wiem
