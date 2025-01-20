@@ -14,3 +14,18 @@ def checkAnswers(questions):
             points+=1
 
     return points
+
+
+def checkMark(points, maxPoints):
+    if points >= maxPoints * 0.91:
+        return "5"
+    elif points >= maxPoints * 0.81:
+        return "4.5"
+    elif points >= maxPoints * 0.71:
+        return "4"
+    elif points >= maxPoints * 0.61:
+        return "3.5"
+    elif points >= maxPoints * 0.51:
+        return "3"
+    else:
+        return "2"

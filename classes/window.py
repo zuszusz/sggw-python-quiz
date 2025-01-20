@@ -1,6 +1,6 @@
 from tkinter import *
 from classes.answer import Answer
-from points import checkAnswers
+from points import checkAnswers, checkMark
 class window:
         def __init__(self, lista):
                 self.questions=lista
@@ -11,7 +11,7 @@ class window:
                 
                 self.okno = Tk()
                 self.okno.title("Quiz")
-                self.okno.geometry("700x400")
+                self.okno.geometry("750x350")
                 
                 self.initialize()
                 self.okno.mainloop()
@@ -102,7 +102,8 @@ class window:
                 else:
                         self.questions[index].userAnswers=[]
                         for i in range(0, len(self.selectedAnswerMultipleValue)):
-                                self.questions[index].userAnswers.append(self.selectedAnswerMultipleValue[i].get())
+                                if self.selectedAnswerMultipleValue[i].get()!="0":
+                                        self.questions[index].userAnswers.append(self.selectedAnswerMultipleValue[i].get())
 
 
         def nextQuestion(self,index):
@@ -128,8 +129,12 @@ class window:
                 self.welcomeLabel.grid(row=0, column=0, padx=10, pady=10)
 
                 points = checkAnswers(self.questions)
-                self.pointsLabel = Label(text=f"Ilość punktów: {points} na {len(self.questions)}", font=("Arial", 20, "bold"))
+                self.pointsLabel = Label(text=f"Ilość punktów: {points} na {len(self.questions)}", font=("Arial", 15, "bold"))
                 self.pointsLabel.grid(row=1, column=0, padx=10, pady=10)
 
+                mark=checkMark(points, len(self.questions))
+                self.mark=Label(text=f"Ocena: {mark}", font=("Arial", 13, "bold"))
+                self.mark.grid(row=2, column=0, padx=10, pady=10)
+
                 self.quitBtn = Button(width=10, text="Wyjdź", command=self.okno.quit, bg="#ff5656")
-                self.quitBtn.grid(row=2, column=0, padx=10, pady=10)
+                self.quitBtn.grid(row=3, column=0, padx=10, pady=10)
