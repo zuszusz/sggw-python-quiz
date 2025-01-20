@@ -5,7 +5,7 @@
 
 [?]Zlota rybka jest?
 [T][] nemo
-[F][] alfred
+[T][] alfred
 [F][] jojo
 
 [?] Czy Python jest fajny?

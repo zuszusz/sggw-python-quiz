@@ -14,7 +14,7 @@ def readQuestions(filePath):
                     questions.append(currentQuestion)
                 if(line[1]=='F' or line[1]=='T'):
                     trueOrFalse = line.split(']')[0] + ']'
-                    value = line.split(']')[0].split('[')[1]
+                    value = line.split(']')[1].split('[')[1]
                     text = line.split(']')[2].strip()
                     
                     if(value==''):

@@ -1,107 +1,135 @@
 from tkinter import *
-
+from classes.answer import Answer
+from points import checkAnswers
 class window:
         def __init__(self, lista):
+                self.questions=lista
+                self.selectedAnswerValue=None
+                self.selectedAnswerMultipleValue=[]
+                self.i=0
+                self.punkty=0
+                
                 self.okno = Tk()
                 self.okno.title("Quiz")
                 self.okno.geometry("700x400")
-                self.list=lista
-                self.i=0
-                self.punkty=0
-                self.tresc_pytania = None
-                self.odp = []
-                self.budujokno()
+                
+                self.initialize()
                 self.okno.mainloop()
 
 
-        def budujokno(self):
-                self.etykieta1=Label(text="Test z informatyki", font=("Arial", 20, "bold"))
-                self.etykieta1.pack(padx=10, pady=10)
-                self.przycisk1=Button(width=10, text="Rozpocznij", command=self.budujpytania, bg="#93bf85")
-                self.przycisk1.pack(padx=10, pady=10)
-                self.przycisk2=Button(width=10, text="Wyjdź", command=self.okno.quit, bg="#ff5656")
-                self.przycisk2.pack()
-
-        def budujpytania(self):
-                        self.etykieta1.destroy()
-                        self.przycisk1.destroy()
-                        self.przycisk2.destroy()
-
-                        x=IntVar()
-                        x.set(0)
-                        self.okno.columnconfigure(0, weight=1)
-                        self.okno.columnconfigure(1, weight=1)
-                        self.etykietaKtorePytanie=Label(text=f"Pytanie {self.i+1} z {len(self.list)}")
-                        self.etykietaKtorePytanie.grid(row=3,column=1, sticky="WN")
-
-                        self.frame=Frame(self.okno, width=200)  # ramka na odpowiedzi
-                        self.frame.grid(row=1,column=0, sticky="N", rowspan=3)
-
-
-                        self.budujWidokPytania()
-
-
-                        #przycisk DALEJ
-                        self.przyciskDalej=Button(width=10, text="Dalej", command=self.budujWidokPytania, bg="#88b7d5")
-                        self.przyciskDalej.grid(row=1,column=1, sticky="WN", pady=10)
-                        #przycisk WYJDŹ
-                        self.przyciskWyjdz=Button(width=10, text="Wyjdź", command=self.okno.quit, bg="#ff5656")
-                        self.przyciskWyjdz.grid(row=2,column=1, sticky="WN", pady=10)
-     
-
-        def budujEkranKoncowy(self):
-                #niszczenie poprzednich widgetów
-                self.tresc_pytania.destroy()
-                self.przyciskDalej.destroy()
-                self.przyciskWyjdz.destroy()
-                self.etykietaKtorePytanie.destroy()
-                self.frame.destroy()
-                for i in range(0, len(self.odp)):
-                        self.odp[i].destroy()
-                self.odp=[]
-
-                #budowanie ekranu końcowego
-                self.etykietaKoniec = Label(text="Koniec quizu", font=("Arial", 20, "bold"))
-                self.etykietaKoniec.grid(row=0,column=0, sticky="N", pady=10)
-
-                self.etykietaKoniec2 = Label(text="Dziękujemy za udział w teście", font=("Arial", 10))
-                self.etykietaKoniec2.grid(row=1,column=0, sticky="N", pady=10)
-
-                self.etykietaIlePunktow = Label(text=f"Ilość punktów: {self.punkty}", font=("Arial", 10))
-                self.etykietaIlePunktow.grid(row=2,column=0, sticky="N", pady=10)
-
-                self.etykietaOcena = Label(text="Ocena: 6", font=("Arial", 10, "bold"))
-                self.etykietaOcena.grid(row=3,column=0, sticky="N", pady=10)
-
-                self.przyciskWyjdz=Button(width=10, text="Wyjdź", command=self.okno.quit, bg="#ff5656")
-                self.przyciskWyjdz.grid(row=4,column=0, sticky="N", pady=10)
-
-
-        def budujWidokPytania(self):
-                if self.i<len(self.list):
-                        if self.tresc_pytania is not None:
-                                self.tresc_pytania.destroy() #usuwanie poprzedniego pytania
-                                self.tresc_pytania=None #czyszczenie zmiennej
-                        if len(self.odp)>0:
-                                for i in range(0, len(self.list[self.i].answers)):
-                                        self.odp[i].destroy() #usuwanie poprzednich odpowiedzi
-                                self.odp=[] #resetowanie listy odpowiedzi
-                       
-                        self.etykietaKtorePytanie.config(text=f"Pytanie {self.i+1} z {len(self.list)}")
-                        self.tresc_pytania=Label(text=self.list[self.i].text, font=("Arial", 20, "bold"))
-                        self.tresc_pytania.grid(row=0,column=0, sticky="N", pady=15)
-
-                        for j in range(0, len(self.list[self.i].answers)):
-                               radiobutton = Radiobutton(self.frame, text=self.list[self.i].answers[j].text, value=j, anchor="w", padx=30)
-                               radiobutton.grid(row=j + 1, column=0, sticky="SENW")
-                               self.odp.append(radiobutton)  # Dodawanie do listy odp
-                elif self.i==len(self.list):
-                        self.budujEkranKoncowy()
+        def initialize(self):
+                self.welcomeLabel=Label(text="Test z informatyki", font=("Arial", 20, "bold"))
+                self.welcomeLabel.pack(padx=10, pady=10)
                 
+                self.startBtn=Button(width=10, text="Rozpocznij", command=self.start, bg="#93bf85")
+                self.startBtn.pack(padx=10, pady=10)
+                
+                self.quitBtn=Button(width=10, text="Wyjdź", command=self.okno.quit, bg="#ff5656")
+                self.quitBtn.pack()
+
+        def start(self):
+                self.welcomeLabel.destroy()
+                self.startBtn.destroy()
+                self.quitBtn.destroy()
+
+                self.i=0
+                self.displayQuestion(self.i)
+
+        def displayQuestion(self,index):
+                # delete old widgets
+
+                if hasattr(self, 'questionIndexLabel'):
+                        self.questionIndexLabel.destroy()
+                if hasattr(self, 'questionText'):
+                        self.questionText.destroy()
+                if hasattr(self, 'answersFrame'):
+                        self.answersFrame.destroy()
+                if hasattr(self, 'nextBtn'):
+                        self.nextBtn.destroy()
+
+                currentQuestion=self.questions[index]
+                
+                self.questionIndexLabel=Label(text=f"Pytanie {index+1} z {len(self.questions)}")
+                self.questionIndexLabel.grid(row=0,column=0, sticky="WN")
+                
+                self.questionText=Label(text=currentQuestion.text, font=("Arial", 16, "bold"))
+                self.questionText.grid(row=3,column=0, sticky="N")
+
+                self.answersFrame=Frame(self.okno, width=200)
+                self.answersFrame.grid(row=4,column=0, sticky="N")
+
+                # for single answer questions
+                if len(currentQuestion.correctAnswers)==1:
+                        
+                        if len(currentQuestion.userAnswers)>0:
+                                self.selectedAnswerValue=StringVar(self.okno,currentQuestion.userAnswers[0])
+                        else:
+                                self.selectedAnswerValue=StringVar(self.okno,currentQuestion.answers[0].value)
+                        
+                        for i in range(0, len(currentQuestion.answers)):
+                                currentAnswer=currentQuestion.answers[i]
+                                radioBtn=Radiobutton(self.answersFrame, text=currentAnswer.text, value=currentAnswer.value,variable=self.selectedAnswerValue)
+                                radioBtn.pack(anchor=W)
+                else:
+                        if len(currentQuestion.userAnswers)>0:
+                                self.selectedAnswerMultipleValue=[]
+                                for i in range(0, len(currentQuestion.answers)):
+                                        self.selectedAnswerMultipleValue.append(StringVar(self.okno,currentQuestion.userAnswers[i]))
+                        else:
+                                self.selectedAnswerMultipleValue=[]
+                                for i in range(0, len(currentQuestion.answers)):
+                                        self.selectedAnswerMultipleValue.append(StringVar(self.okno,"0"))
+
+                        for i in range(0, len(currentQuestion.answers)):
+                                currentAnswer=currentQuestion.answers[i]
+                                currentQuestion.userAnswers.append(currentAnswer.value)
+                                checkBtn=Checkbutton(self.answersFrame, text=currentAnswer.text,onvalue=currentAnswer.value, variable=self.selectedAnswerMultipleValue[i]).pack(anchor=W)
+
+
+                self.nextBtn=Button(width=10, text="Dalej", command=lambda: self.nextQuestion(index), bg="#88b7d5")
+                self.nextBtn.grid(row=5,column=0, sticky="WN", pady=10)
+
+                if index>0 and index<=len(self.questions)-1:
+                        self.previousBtn=Button(width=10, text="Poprzednie", command=lambda: self.previousQuestion(index), bg="#88b7d5")
+                        self.previousBtn.grid(row=6,column=0, sticky="WN", pady=10)
+
+                if index==len(self.questions)-1:
+                        self.nextBtn.config(text="Zakończ", command=self.finishScreen)
+
+        def saveAnswer(self,index):
+                if len(self.questions[index].correctAnswers)==1:
+                        self.questions[index].userAnswers=[self.selectedAnswerValue.get()]
+                else:
+                        self.questions[index].userAnswers=[]
+                        for i in range(0, len(self.selectedAnswerMultipleValue)):
+                                self.questions[index].userAnswers.append(self.selectedAnswerMultipleValue[i].get())
+
+
+        def nextQuestion(self,index):
+                self.saveAnswer(index)
                 self.i+=1
-        
+                if self.i<len(self.questions):
+                        self.displayQuestion(self.i)
+        def previousQuestion(self,index):
+                self.saveAnswer(index)
+                self.i-=1
+                if self.i>=0:
+                        self.displayQuestion(self.i)
 
-        
+        def finishScreen(self):
+                self.saveAnswer(self.i)
+                self.questionIndexLabel.destroy()
+                self.questionText.destroy()
+                self.answersFrame.destroy()
+                self.nextBtn.destroy()
+                self.previousBtn.destroy()
+                
+                self.welcomeLabel = Label(text="Koniec testu", font=("Arial", 20, "bold"))
+                self.welcomeLabel.grid(row=0, column=0, padx=10, pady=10)
 
+                points = checkAnswers(self.questions)
+                self.pointsLabel = Label(text=f"Ilość punktów: {points} na {len(self.questions)}", font=("Arial", 20, "bold"))
+                self.pointsLabel.grid(row=1, column=0, padx=10, pady=10)
 
-
+                self.quitBtn = Button(width=10, text="Wyjdź", command=self.okno.quit, bg="#ff5656")
+                self.quitBtn.grid(row=2, column=0, padx=10, pady=10)

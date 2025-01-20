@@ -3,6 +3,7 @@ class Question(object):
         self.text = text
         self.answers = answers
         self.correctAnswers = correctAnswers
+        self.userAnswers = []
         
     def __str__(self):
         return self.text
