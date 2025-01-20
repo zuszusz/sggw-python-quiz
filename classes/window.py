@@ -50,13 +50,13 @@ class window:
                 currentQuestion=self.questions[index]
                 
                 self.questionIndexLabel=Label(text=f"Pytanie {index+1} z {len(self.questions)}")
-                self.questionIndexLabel.grid(row=0,column=0, sticky="WN")
+                self.questionIndexLabel.grid(row=0,column=0, sticky="WN", padx=10)
                 
                 self.questionText=Label(text=currentQuestion.text, font=("Arial", 16, "bold"))
                 self.questionText.grid(row=3,column=0, sticky="N")
 
                 self.answersFrame=Frame(self.okno, width=200)
-                self.answersFrame.grid(row=4,column=0, sticky="N")
+                self.answersFrame.grid(row=4,column=0, sticky="W", padx=25)
 
                 # for single answer questions
                 if len(currentQuestion.correctAnswers)==1:
@@ -87,11 +87,11 @@ class window:
 
 
                 self.nextBtn=Button(width=10, text="Dalej", command=lambda: self.nextQuestion(index), bg="#88b7d5")
-                self.nextBtn.grid(row=5,column=0, sticky="WN", pady=10)
+                self.nextBtn.grid(row=5,column=0, sticky="WN", pady=10, padx=25)
 
-                if index>0 and index<=len(self.questions)-1:
+                if index>0 and index<=len(self.questions)-1 and not hasattr(self, 'previousBtn'):
                         self.previousBtn=Button(width=10, text="Poprzednie", command=lambda: self.previousQuestion(index), bg="#88b7d5")
-                        self.previousBtn.grid(row=6,column=0, sticky="WN", pady=10)
+                        self.previousBtn.grid(row=6,column=0, sticky="WN", pady=10, padx=25)
 
                 if index==len(self.questions)-1:
                         self.nextBtn.config(text="Zakończ", command=self.finishScreen)

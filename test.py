@@ -2,6 +2,7 @@ from classes.answer import Answer
 from classes.question import Question
 from fileImports import readQuestions 
 from classes.window import window
+from classes.questionGenerator import *
 
 
 a1= Answer("Stest","stoks")
@@ -11,11 +12,11 @@ a4= Answer("Stest","stoks3")
 
 q1= Question("Qtest",[a1,a2,a3,a4],[a1,a2])
 
-#tutaj musi być własna ścieżka do pliku aby działało
-list = readQuestions("D://Projects//sggw-python-quiz//questions//question.txt")
-print(list[0].text)
-print(q1.text)
-print(len(list[0].answers))
+
+list = Generator.generateQuestions()
+
+print(len(list[0].answers[0].value))
+print(len(list[0].answers[0].text))
 window(list)
 
 
