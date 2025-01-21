@@ -6,6 +6,8 @@ class Answer(object):
     def __init__(self, text="",value=""):
         self.text = text
         self.value = value
+        if value=="":
+            self.value=text
         
     def __str__(self):
         return self.text
@@ -64,63 +66,62 @@ class Generator(object):
 
         questions.append(Question(
             "Który z poniższych elementów nie jest częścią komputera?", 
-            [Answer("a) Klawiatura", "Klawiatura"), Answer("b) Monitor", "Monitor"), Answer("c) Silnik samochodowy", "Silnik samochodowy")], 
-            [Answer("c) Silnik samochodowy", "Silnik samochodowy")]
+            [Answer("a) Klawiatura"), Answer("b) Monitor"), Answer("c) Silnik samochodowy")], 
+            [Answer("c) Silnik samochodowy")]
         ))
 
         questions.append(Question(
             "Co oznacza skrót URL?", 
-            [Answer("a) Universal Resource Locator", "Universal Resource Locator"), Answer("b) Uniform Resource Locator", "Uniform Resource Locator"), Answer("c) Unique Resource Locator", "Unique Resource Locator")], 
-            [Answer("b) Uniform Resource Locator", "Uniform Resource Locator")]
+            [Answer("a) Universal Resource Locator"), Answer("b) Uniform Resource Locator"), Answer("c) Unique Resource Locator")], 
+            [Answer("b) Uniform Resource Locator")]
         ))
 
         questions.append(Question(
             "Który z poniższych jest przykładem przeglądarki internetowej?", 
-            [Answer("a) Adobe Photoshop", "Adobe Photoshop"), Answer("b) Google Chrome", "Google Chrome"), Answer("c) Microsoft Excel", "Microsoft Excel")], 
-            [Answer("b) Google Chrome", "Google Chrome")]
+            [Answer("a) Adobe Photoshop"), Answer("b) Google Chrome"), Answer("c) Microsoft Excel")], 
+            [Answer("b) Google Chrome")]
         ))
 
         questions.append(Question(
             "Co to jest bootowanie?", 
-            [Answer("a) Proces uruchamiania systemu", "Proces uruchamiania systemu"), Answer("b) Instalacja systemu", "Instalacja systemu"), Answer("c) Formatowanie dysku", "Formatowanie dysku")], 
-            [Answer("a) Proces uruchamiania systemu", "Proces uruchamiania systemu")]
+            [Answer("a) Proces uruchamiania systemu"), Answer("b) Instalacja systemu"), Answer("c) Formatowanie dysku")], 
+            [Answer("a) Proces uruchamiania systemu")]
         ))
-
 
         questions.append(Question(
             "Który z poniższych języków służy do tworzenia stron internetowych?", 
-            [Answer("a) Python", "Python"), Answer("b) HTML", "HTML"), Answer("c) C++", "C++")], 
-            [Answer("b) HTML", "HTML")]
+            [Answer("a) Python"), Answer("b) HTML"), Answer("c) C++")], 
+            [Answer("b) HTML")]
         ))
 
         questions.append(Question(
             "Które z poniższych to funkcje systemu operacyjnego?", 
-            [Answer("a) Zarządzanie plikami", "Zarządzanie plikami"), Answer("b) Edytowanie zdjęć", "Edytowanie zdjęć"), Answer("c) Zarządzanie pamięcią", "Zarządzanie pamięcią")], 
-            [Answer("a) Zarządzanie plikami", "Zarządzanie plikami"), Answer("c) Zarządzanie pamięcią", "Zarządzanie pamięcią")]
+            [Answer("a) Zarządzanie plikami"), Answer("b) Edytowanie zdjęć"), Answer("c) Zarządzanie pamięcią")], 
+            [Answer("a) Zarządzanie plikami"), Answer("c) Zarządzanie pamięcią")]
         ))
 
         questions.append(Question(
             "Które z poniższych urządzeń są używane do przechowywania danych?", 
-            [Answer("a) Pendrive", "Pendrive"), Answer("b) Procesor", "Procesor"), Answer("c) Dysk twardy", "Dysk twardy")], 
-            [Answer("a) Pendrive", "Pendrive"), Answer("c) Dysk twardy", "Dysk twardy")]
+            [Answer("a) Pendrive"), Answer("b) Procesor"), Answer("c) Dysk twardy")], 
+            [Answer("a) Pendrive"), Answer("c) Dysk twardy")]
         ))
 
         questions.append(Question(
             "Które z poniższych są językami znaczników?", 
-            [Answer("a) HTML", "HTML"), Answer("b) CSS", "CSS"), Answer("c) XML", "XML")], 
-            [Answer("a) HTML", "HTML"), Answer("c) XML", "XML")]
+            [Answer("a) HTML"), Answer("b) CSS"), Answer("c) XML")], 
+            [Answer("a) HTML"), Answer("c) XML")]
         ))
 
         questions.append(Question(
             "Które z poniższych programów są używane do edycji tekstu?", 
-            [Answer("a) Microsoft Word", "Microsoft Word"), Answer("b) Notepad", "Notepad"), Answer("c) Microsoft Excel", "Microsoft Excel")], 
-            [Answer("a) Microsoft Word", "Microsoft Word"), Answer("b) Notepad", "Notepad")]
+            [Answer("a) Microsoft Word"), Answer("b) Notepad"), Answer("c) Microsoft Excel")], 
+            [Answer("a) Microsoft Word"), Answer("b) Notepad")]
         ))
 
         questions.append(Question(
             "Które z poniższych są przykładami pamięci masowej?", 
-            [Answer("a) HDD", "HDD"), Answer("b) SSD", "SSD"), Answer("c) RAM", "RAM")], 
-            [Answer("a) HDD", "HDD"), Answer("b) SSD", "SSD")]
+            [Answer("a) HDD"), Answer("b) SSD"), Answer("c) RAM")], 
+            [Answer("a) HDD"), Answer("b) SSD")]
         ))
 
         return questions
