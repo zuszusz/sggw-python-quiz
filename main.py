@@ -25,8 +25,12 @@ class Question(object):
 #methods 
 
 def checkAnswers(questions):
-    points=0
+    points=0             
     for question in questions:
+        for i in range(len(question.userAnswers) - 1, -1, -1):
+            if question.userAnswers[i] == '0':
+                del question.userAnswers[i]
+                  
         areAnswersOk=True
         if(len(question.correctAnswers)!=len(question.userAnswers)):
             areAnswersOk=False
@@ -191,7 +195,7 @@ class window:
                         if len(currentQuestion.userAnswers)>0:
                                 self.selectedAnswerValue=StringVar(self.okno,currentQuestion.userAnswers[0])
                         else:
-                                self.selectedAnswerValue=StringVar(self.okno,currentQuestion.answers[0].value)
+                                self.selectedAnswerValue=StringVar(self.okno,"Unselected")
                         
                         for i in range(0, len(currentQuestion.answers)):
                                 currentAnswer=currentQuestion.answers[i]
@@ -209,7 +213,6 @@ class window:
 
                         for i in range(0, len(currentQuestion.answers)):
                                 currentAnswer=currentQuestion.answers[i]
-                                currentQuestion.userAnswers.append(currentAnswer.value)
                                 checkBtn=Checkbutton(self.answersFrame, text=currentAnswer.text,onvalue=currentAnswer.value, variable=self.selectedAnswerMultipleValue[i]).pack(anchor=W)
 
 
@@ -229,8 +232,7 @@ class window:
                 else:
                         self.questions[index].userAnswers=[]
                         for i in range(0, len(self.selectedAnswerMultipleValue)):
-                                if self.selectedAnswerMultipleValue[i].get()!="0":
-                                        self.questions[index].userAnswers.append(self.selectedAnswerMultipleValue[i].get())
+                            self.questions[index].userAnswers.append(self.selectedAnswerMultipleValue[i].get())
 
 
         def nextQuestion(self,index):
