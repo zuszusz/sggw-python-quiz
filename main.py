@@ -216,15 +216,21 @@ class window:
                                 checkBtn=Checkbutton(self.answersFrame, text=currentAnswer.text,onvalue=currentAnswer.value, variable=self.selectedAnswerMultipleValue[i]).pack(anchor=W)
 
 
-                self.nextBtn=Button(width=10, text="Dalej", command=lambda: self.nextQuestion(index), bg="#88b7d5")
+                self.nextBtn=Button(width=10, text="Dalej", command=self.nextQuestion, bg="#88b7d5")
                 self.nextBtn.grid(row=5,column=0, sticky="WN", pady=10, padx=25)
 
-                if index>0 and index<=len(self.questions)-1 and not hasattr(self, 'previousBtn'):
-                        self.previousBtn=Button(width=10, text="Poprzednie", command=lambda: self.previousQuestion(index), bg="#88b7d5")
+                if index>0 and index<=len(self.questions)-1 and (hasattr(self, 'previousBtn')==False or self.previousBtn==None):
+                        self.previousBtn=Button(width=10, text="Poprzednie", command=self.previousQuestion, bg="#88b7d5")
                         self.previousBtn.grid(row=6,column=0, sticky="WN", pady=10, padx=25)
+                elif index == 0:
+                        if self.previousBtn!=None:
+                            self.previousBtn.destroy() 
+                            self.previousBtn=None
+
+                        
 
                 if index==len(self.questions)-1:
-                        self.nextBtn.config(text="Zakończ", command=self.finishScreen)
+                        self.nextBtn.config(text="Zakończ", command=self.finishScreen,bg="#93bf85")
 
         def saveAnswer(self,index):
                 if len(self.questions[index].correctAnswers)==1:
@@ -235,14 +241,15 @@ class window:
                             self.questions[index].userAnswers.append(self.selectedAnswerMultipleValue[i].get())
 
 
-        def nextQuestion(self,index):
-                self.saveAnswer(index)
-                self.i+=1
+        def nextQuestion(self):
+                self.saveAnswer(self.i)
+                self.i=self.i+1
                 if self.i<len(self.questions):
                         self.displayQuestion(self.i)
-        def previousQuestion(self,index):
-                self.saveAnswer(index)
-                self.i-=1
+        def previousQuestion(self):
+                self.saveAnswer(self.i)
+                if(self.i>0):
+                    self.i=self.i-1
                 if self.i>=0:
                         self.displayQuestion(self.i)
 
