@@ -261,6 +261,14 @@ class window:
                 self.nextBtn.destroy()
                 self.previousBtn.destroy()
                 
+                for widget in self.okno.grid_slaves():
+                    widget.destroy()
+                self.okno.grid_columnconfigure(0, weight=1)
+                self.okno.grid_rowconfigure(0, weight=1)
+                self.okno.grid_rowconfigure(1, weight=1)
+                self.okno.grid_rowconfigure(2, weight=1)
+                self.okno.grid_rowconfigure(3, weight=1)
+                
                 self.welcomeLabel = Label(text="Koniec testu", font=("Arial", 20, "bold"))
                 self.welcomeLabel.grid(row=0, column=0, padx=10, pady=10)
 
